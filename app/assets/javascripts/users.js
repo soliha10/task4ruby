@@ -8,7 +8,7 @@
   const STORED_TURNS = 40;
   const SENT_TURNS = 20;
   const RELOAD_DELAY_MS = 1200;
-  const ERROR_CLASS = "text-danger";
+  const ERROR_CLASS = "is-error";
 
   const byId = (id) => document.getElementById(id);
   const tbody = table.querySelector("tbody");
@@ -118,9 +118,9 @@
     const isUser = role === "user";
     chatHint.hidden = true;
     const wrapper = document.createElement("div");
-    wrapper.className = `d-flex mb-2 ${isUser ? "justify-content-end" : ""}`;
+    wrapper.className = `chat-row ${isUser ? "from-user" : "from-assistant"}`;
     const bubble = document.createElement("div");
-    bubble.className = `chat-message rounded px-3 py-2 small ${isUser ? "bg-primary text-white" : "bg-body-secondary"} ${extraClass}`;
+    bubble.className = `chat-message ${extraClass}`;
     bubble.textContent = text;
     wrapper.appendChild(bubble);
     chatMessages.appendChild(wrapper);
@@ -168,7 +168,7 @@
     addMessage("user", message);
     chatInput.value = "";
     setBusy(true);
-    const thinking = addMessage("assistant", "Thinking…", "fst-italic text-body-secondary");
+    const thinking = addMessage("assistant", "Thinking…", "is-pending");
 
     try {
       const response = await postMessage(message);
@@ -190,7 +190,7 @@
   const clearChat = () => {
     history = [];
     saveHistory(history);
-    chatMessages.querySelectorAll(".d-flex").forEach((element) => element.remove());
+    chatMessages.querySelectorAll(".chat-row").forEach((element) => element.remove());
     chatHint.hidden = false;
   };
 
@@ -201,6 +201,12 @@
   filterInput.addEventListener("input", applyFilters);
   chatForm.addEventListener("submit", sendMessage);
   byId("chat-clear").addEventListener("click", clearChat);
+  chatHint.addEventListener("click", (event) => {
+    const chip = event.target.closest(".chat-chip");
+    if (!chip) return;
+    chatInput.value = chip.textContent.trim();
+    chatForm.requestSubmit();
+  });
 
   history.forEach((turn) => addMessage(turn.role, turn.text));
   updateToolbar();

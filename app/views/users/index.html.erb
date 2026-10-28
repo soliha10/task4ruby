@@ -1,65 +1,79 @@
 <% content_for :title, "Users" %>
-<div class="row g-3">
-  <div class="col-xl-8">
-    <div class="card shadow-sm">
-      <div class="card-body">
-        <div class="btn-toolbar gap-2 mb-3" role="toolbar" aria-label="User actions">
-          <%= bulk_action_buttons %>
-          <span class="align-self-center small text-body-secondary" id="selection-info"></span>
-          <div class="ms-auto">
-            <div class="input-group" data-bs-toggle="tooltip" title="Filter rows by name or e-mail">
-              <span class="input-group-text"><i class="bi bi-funnel"></i></span>
-              <input type="search" id="table-filter" class="form-control" placeholder="Filter" aria-label="Filter by name or e-mail">
-            </div>
-          </div>
-        </div>
-
-        <%= form_with url: block_users_path, method: :post, id: "users-form" do %>
-          <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0 users-table" id="users-table">
-              <thead>
-                <tr>
-                  <th scope="col" class="col-check">
-                    <input type="checkbox" class="form-check-input" id="select-all" aria-label="Select all users">
-                  </th>
-                  <%= sort_headers @sort, @dir %>
-                </tr>
-              </thead>
-              <tbody>
-                <% @users.each do |user| %>
-                  <tr data-id="<%= user.id %>" data-name="<%= user.name %>" data-email="<%= user.email %>"
-                      data-status="<%= user.status %>" data-last-login="<%= user.last_login_at&.iso8601 %>"
-                      class="<%= 'text-body-secondary' if user.blocked? %>">
-                    <td>
-                      <input type="checkbox" class="form-check-input row-check" name="ids[]" value="<%= user.id %>" aria-label="Select <%= user.name %>">
-                    </td>
-                    <td>
-                      <div class="fw-semibold">
-                        <%= user.name %>
-                        <% if user == current_user %><span class="badge text-bg-info ms-1">you</span><% end %>
-                      </div>
-                      <div class="small text-body-secondary"><%= job_position_text(user) %></div>
-                    </td>
-                    <td><%= user.email %></td>
-                    <td><%= last_login_cell(user.last_login_at) %></td>
-                    <td><%= status_badge(user) %></td>
-                  </tr>
-                <% end %>
-              </tbody>
-            </table>
-          </div>
-          <p class="text-body-secondary small mt-2 mb-0" id="empty-message" hidden>No users match the filter.</p>
-        <% end %>
-      </div>
-      <div class="card-footer small text-body-secondary">
-        <span id="row-count"><%= pluralize(@users.size, "user") %></span>
+<div class="app-grid">
+  <div class="min-w-0">
+    <div class="page-head">
+      <div>
+        <h1 class="page-title">Users</h1>
+        <p class="page-subtitle">Block, unblock or delete accounts. Select rows with the checkboxes, then use the toolbar.</p>
       </div>
     </div>
+
+    <section class="card users-card">
+      <div class="users-toolbar" role="toolbar" aria-label="User actions">
+        <div class="d-flex align-items-center gap-2">
+          <%= bulk_action_buttons %>
+          <span class="selection-info" id="selection-info"></span>
+        </div>
+        <div class="search-field ms-auto" data-bs-toggle="tooltip" title="Filter rows by name or e-mail">
+          <i class="bi bi-search"></i>
+          <input type="search" id="table-filter" class="form-control" placeholder="Filter by name or e-mail" aria-label="Filter by name or e-mail">
+        </div>
+      </div>
+
+      <%= form_with url: block_users_path, method: :post, id: "users-form" do %>
+        <div class="table-responsive">
+          <table class="table align-middle mb-0 users-table" id="users-table">
+            <thead>
+              <tr>
+                <th scope="col" class="col-check">
+                  <input type="checkbox" class="form-check-input" id="select-all" aria-label="Select all users">
+                </th>
+                <%= sort_headers @sort, @dir %>
+              </tr>
+            </thead>
+            <tbody>
+              <% @users.each do |user| %>
+                <tr data-id="<%= user.id %>" data-name="<%= user.name %>" data-email="<%= user.email %>"
+                    data-status="<%= user.status %>" data-last-login="<%= user.last_login_at&.iso8601 %>"
+                    class="<%= 'is-blocked' if user.blocked? %>">
+                  <td class="col-check">
+                    <input type="checkbox" class="form-check-input row-check" name="ids[]" value="<%= user.id %>" aria-label="Select <%= user.name %>">
+                  </td>
+                  <td>
+                    <div class="user-cell">
+                      <span class="avatar-soft"><%= user_initials(user) %></span>
+                      <div class="min-w-0">
+                        <div class="user-name">
+                          <%= user.name %>
+                          <% if user == current_user %><span class="you-badge">You</span><% end %>
+                        </div>
+                        <div class="user-meta"><%= job_position_text(user) %></div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="cell-email"><%= user.email %></td>
+                  <td class="cell-muted"><%= last_login_cell(user.last_login_at) %></td>
+                  <td><%= status_badge(user) %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+        <div class="empty-state" id="empty-message" hidden>
+          <i class="bi bi-search"></i>
+          <div class="empty-title">No users match the filter</div>
+          <div class="empty-text">Try a different name or e-mail.</div>
+        </div>
+      <% end %>
+      <div class="users-footer">
+        <span id="row-count"><%= pluralize(@users.size, "user") %></span>
+      </div>
+    </section>
   </div>
 
-  <div class="col-xl-4">
+  <aside class="min-w-0">
     <%= render "assistant" %>
-  </div>
+  </aside>
 </div>
 
 <% content_for :scripts do %>

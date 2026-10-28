@@ -5,7 +5,7 @@ module Assistant
     class Error < StandardError; end
 
     ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/%s:generateContent"
-    DEFAULT_MODEL = "gemini-2.5-flash"
+    DEFAULT_MODEL = "gemini-3.5-flash"
     OPEN_TIMEOUT_SECONDS = 10
     READ_TIMEOUT_SECONDS = 60
     NETWORK_ERRORS = [ Net::OpenTimeout, Net::ReadTimeout, SocketError, Errno::ECONNREFUSED ].freeze

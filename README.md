@@ -74,7 +74,7 @@ empty; `RESEED=1 bin/rails db:seed` replaces all users.
 | `DATABASE_URL`    | PostgreSQL connection (production)                   |
 | `SECRET_KEY_BASE` | Rails secret (production; no master key is needed)   |
 | `GEMINI_API_KEY`  | Google AI Studio API key for the assistant           |
-| `GEMINI_MODEL`    | Gemini model, default `gemini-2.5-flash`             |
+| `GEMINI_MODEL`    | Gemini model, default `gemini-3.5-flash`             |
 | `APP_HOST`        | Optional extra allowed host (custom domain)          |
 
 Without `GEMINI_API_KEY` the app works normally and the chat answers with a
