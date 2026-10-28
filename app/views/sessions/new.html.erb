@@ -1,0 +1,7 @@
+<%= render layout: "shared/auth_card", locals: { title: "Log in", heading: "Log in", prompt: "No account yet?", link_label: "Register", link_path: register_path } do %>
+  <%= form_with url: login_path, method: :post do |f| %>
+    <%= form_field f, :email, "E-mail", :email_field, value: params[:email], autofocus: true, autocomplete: "email" %>
+    <%= form_field f, :password, "Password", :password_field, autocomplete: "current-password" %>
+    <%= f.submit "Log in", class: "btn btn-primary w-100" %>
+  <% end %>
+<% end %>

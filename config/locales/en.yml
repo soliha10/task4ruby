@@ -1,0 +1,21 @@
+en:
+  auth:
+    login_required: "Please log in to continue."
+    account_missing: "Your account no longer exists. Please register again."
+    blocked: "Your account is blocked."
+    session_expired: "Your session has expired. Please try again."
+    invalid_credentials: "Invalid email or password."
+    welcome_back: "Welcome back, %{name}!"
+    registered: "Registration successful. Welcome, %{name}!"
+    logged_out: "You have been logged out."
+    email_taken: "is already registered"
+  users:
+    none_selected: "No users selected."
+    bulk_result:
+      one: "%{count} user %{outcome}."
+      other: "%{count} users %{outcome}."
+    self_lockout: "%{result} Your own account was %{outcome}, so you have been logged out."
+    outcomes:
+      block: "blocked"
+      unblock: "unblocked"
+      delete: "deleted"

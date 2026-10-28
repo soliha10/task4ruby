@@ -1,0 +1,25 @@
+<div class="card shadow-sm sticky-xl-top chat-card" id="assistant">
+  <div class="card-header d-flex align-items-center">
+    <i class="bi bi-chat-dots me-2"></i>
+    <span class="fw-semibold">Assistant</span>
+    <button type="button" class="btn btn-sm btn-outline-secondary ms-auto" id="chat-clear" data-bs-toggle="tooltip" title="Clear the conversation">
+      <i class="bi bi-eraser"></i>
+    </button>
+  </div>
+  <div class="card-body chat-messages" id="chat-messages">
+    <p class="small text-body-secondary mb-0" id="chat-hint">
+      Ask about users or give commands, e.g. "How many users are blocked?",
+      "Select users whose e-mail starts with s or p", "Sort by name".
+    </p>
+  </div>
+  <div class="card-footer">
+    <form id="chat-form" autocomplete="off">
+      <div class="input-group">
+        <input type="text" class="form-control" id="chat-input" placeholder="Ask the assistant…" aria-label="Message" required>
+        <button type="submit" class="btn btn-primary" id="chat-send" data-bs-toggle="tooltip" title="Send">
+          <i class="bi bi-send"></i><span class="visually-hidden">Send</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

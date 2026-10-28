@@ -1,0 +1,31 @@
+*, *::before, *::after {
+  transition: none !important;
+  animation: none !important;
+}
+
+.auth-card {
+  max-width: 420px;
+}
+
+.users-table th,
+.users-table td {
+  white-space: nowrap;
+}
+
+.users-table .col-check {
+  width: 2.5rem;
+}
+
+.chat-card {
+  top: 1rem;
+}
+
+.chat-messages {
+  height: 420px;
+  overflow-y: auto;
+}
+
+.chat-message {
+  white-space: pre-wrap;
+  word-break: break-word;
+}

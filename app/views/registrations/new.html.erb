@@ -1,0 +1,8 @@
+<%= render layout: "shared/auth_card", locals: { title: "Register", heading: "Create an account", prompt: "Already registered?", link_label: "Log in", link_path: login_path } do %>
+  <%= form_with model: @user, url: register_path, method: :post do |f| %>
+    <%= form_field f, :name, "Name", :text_field, autocomplete: "name" %>
+    <%= form_field f, :email, "E-mail", :email_field, autocomplete: "email" %>
+    <%= form_field f, :password, "Password", :password_field, autocomplete: "new-password" %>
+    <%= f.submit "Register", class: "btn btn-primary w-100" %>
+  <% end %>
+<% end %>
