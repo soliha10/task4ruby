@@ -20,7 +20,9 @@
         </div>
       </div>
 
-      <%= form_with url: block_users_path, method: :post, id: "users-form" do %>
+      <%# The toolbar buttons override the action and method (formaction + _method), so the
+          form needs the session-wide CSRF token instead of a per-form one tied to POST /users/block. %>
+      <%= form_with url: block_users_path, method: :post, id: "users-form", authenticity_token: form_authenticity_token do %>
         <div class="table-responsive">
           <table class="table align-middle mb-0 users-table" id="users-table">
             <thead>
